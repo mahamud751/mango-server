@@ -5,7 +5,7 @@ import Products from "../models/Products.js";
 
 dotenv.config();
 
-const mockProducts = [
+const seedProductsData = [
   {
     name: "Organic Himsagar Mango",
     description: "Premium quality Himsagar mangoes grown organically in Chapai Nawabganj.",
@@ -227,7 +227,7 @@ async function seedProducts() {
 
   await Products.deleteMany({});
   const products = await Products.insertMany(
-    mockProducts.map((product) => ({ ...product, category: category._id }))
+    seedProductsData.map((product) => ({ ...product, category: category._id }))
   );
 
   await Category.updateOne({ _id: category._id }, { $set: { products: products.map((p) => p._id) } });
