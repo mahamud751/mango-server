@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 
 export const createUser = async (req, res) => {
   const newUser = new User(req.body);
@@ -47,8 +48,8 @@ export const getAdmin = async (req, res, next) => {
   try {
     const email = req.params.email;
     const query = { email };
-    const user = await usersCollection.findOne(query);
-    res.send({ isAdmin: user?.role === "admin" });
+    const user = await User.findOne(query);
+    res.send({ isAdmin: Boolean(user?.isAdmin) });
   } catch (err) {
     next(err);
   }
@@ -56,8 +57,7 @@ export const getAdmin = async (req, res, next) => {
 
 export const getUsers = async (req, res, next) => {
   try {
-    const query = {};
-    const users = await User.find(query).toArray();
+    const users = await User.find({});
     res.status(200).json(users);
   } catch (err) {
     next(err);

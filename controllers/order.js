@@ -19,6 +19,37 @@ export const getOrder = async (req, res, next) => {
   }
 };
 
+export const getSingleOrder = async (req, res, next) => {
+  try {
+    const order = await OrderModel.findById(req.params.id);
+    res.status(200).json(order);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateOrder = async (req, res, next) => {
+  try {
+    const order = await OrderModel.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json(order);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteOrder = async (req, res, next) => {
+  try {
+    const order = await OrderModel.findByIdAndDelete(req.params.id);
+    res.status(200).json(order);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getMyBooking = async (req, res, next) => {
   try {
     const email = req.query.email;

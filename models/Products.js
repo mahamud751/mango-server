@@ -1,31 +1,49 @@
 import mongoose from "mongoose";
-const { ObjectId } = mongoose.Schema.Types;
 const ProductsSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
     },
-    img: {
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+    variety: {
+      type: String,
+    },
+    description: {
+      type: String,
+      default: "",
+    },
+    images: {
       type: [String],
+      default: [],
     },
-    realPrice: {
-      type: String,
+    price: {
+      type: Number,
+      required: true,
     },
-    buyPrice: {
-      type: String,
-    },
-    offerPrice: {
-      type: String,
-    },
-    shortDescription: {
-      type: String,
-    },
-    fullDescription: {
-      type: String,
+    originalPrice: {
+      type: Number,
     },
     rating: {
-      type: String,
+      type: Number,
+      default: 0,
+    },
+    reviews: {
+      type: Number,
+      default: 0,
+    },
+    stock: {
+      type: Number,
+      default: 0,
+    },
+    benefits: {
+      type: [String],
+      default: [],
     },
     productType: {
       type: String,
@@ -41,11 +59,9 @@ const ProductsSchema = new mongoose.Schema(
       type: Number,
     },
     category: {
-      id: {
-        type: ObjectId,
-        ref: "Category",
-        required: true,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      default: null,
     },
   },
   { timestamps: true }

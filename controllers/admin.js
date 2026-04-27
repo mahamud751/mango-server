@@ -1,4 +1,5 @@
 import Admin from "../models/Admin.js";
+import jwt from "jsonwebtoken";
 export const createAdmin = async (req, res) => {
   const newUser = new Admin(req.body);
   try {
